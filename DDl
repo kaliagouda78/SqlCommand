@@ -1,0 +1,118 @@
+SQL> uodate emp
+SP2-0042: unknown command "uodate emp" - rest of line ignored.
+SQL> update emp
+  2  set job='MANAGER',sal=sal+2000
+  3  where empno=7369;
+
+1 row updated.
+
+SQL> update emp
+  2  set sal=sal+sal*0.20
+  3  where job='MANAGER';
+
+5 rows updated.
+
+SQL> update emp
+  2  set sal=sal+1000
+  3  ;
+
+20 rows updated.
+
+SQL> update emp
+  2  set sal=sal+SAL*0.2,COMM=COMM+COMM*0.15
+  3  WHERE COMM IS NOT NULL;
+
+12 rows updated.
+
+SQL> WHERE COMM IS NOT NULL;
+SP2-0734: unknown command beginning "WHERE COMM..." - rest of line ignored.
+SQL> update emp
+  2  set COMM =800
+  3  WHERE COMM IS NULL;
+
+8 rows updated.
+
+SQL> update emp
+  2  SET COMM=NULL
+  3  WHERE EMPNO IN(75317521,7698,7900);
+
+2 rows updated.
+
+SQL> WHERE EMPNO IN(7531 7521,7698,7900);
+SP2-0734: unknown command beginning "WHERE EMPN..." - rest of line ignored.
+SQL> update emp
+  2  SET COMM=NULL
+  3  WHERE EMPNO IN(7521,7698,7900);
+
+3 rows updated.
+
+SQL> update emp
+  2  SET SAL=12000
+  3  WHERE SAL=5000;
+
+0 rows updated.
+
+SQL> update emp
+  2  SET SAL=SAL+SAL*0.1
+  3  WHERE HIREDATE BETWEEN '1-JAN-1982' AND '31-DEC-1982';
+
+1 row updated.
+
+SQL> update emp
+  2  SET SAL=SAL+SAL*0.20
+  3  WHERE TRUNC((SYSDATE-HIREDATE)/365);
+WHERE TRUNC((SYSDATE-HIREDATE)/365)
+                                  *
+ERROR at line 3:
+ORA-00920: invalid relational operator
+
+
+SQL> update emp
+  2  SET SAL=SAL+SAL*0.20
+  3  WHERE TRUNC((SYSDATE-HIREDATE)/365);
+WHERE TRUNC((SYSDATE-HIREDATE)/365)
+                                  *
+ERROR at line 3:
+ORA-00920: invalid relational operator
+
+
+SQL> update emp
+  2  SET SAL=SAL+SAL*0.20
+  3  WHERE TRUNC((SYSDATE-HIREDATE)/365)>42;
+
+12 rows updated.
+
+SQL> update emp
+  2  SET SAL=SAL+SAL*0.15
+  3  WHERE SAL*12>30000;
+
+19 rows updated.
+
+SQL> update emp
+  2  SET SAL=SAL+SAL*0.20
+  3  WHERE  ENAME LIKE 'A%S';
+
+1 row updated.
+
+SQL> DELETE FROM EMP
+  2  WHERE EMPNO=7900;
+
+1 row deleted.
+
+SQL> DELETE FROM EMP
+  2  WHERE JOB ='MANAGER';
+
+5 rows deleted.
+
+SQL> DELETE FROM EMP
+  2  WHERE DEPTNO IN (10,30);
+
+5 rows deleted.
+
+SQL> DELETE EMP;
+
+9 rows deleted.
+
+SQL> ROLLBACK;
+
+Rollback complete.
