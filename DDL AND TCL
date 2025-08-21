@@ -1,0 +1,292 @@
+SQL> INSERT INTO STUDENTS VALUES(2,'ANUSHKA','F','22-APR-1998');
+
+1 row created.
+
+SQL> INSERT INTO STUDENTS VALUES(3,'KIRAN','M','18-SEP-1996');
+
+1 row created.
+
+SQL> INSERT INTO STUDENTS VALUES(4,'KAVYA','F','06-MAR-1997');
+
+1 row created.
+
+SQL> INSERT INTO STUDENTS VALUES(5,'GOWTHAM','M','25-JAN-1995');
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> alter table students
+  2  add (address varchar(10)),(mailid varchar22(10));
+add (address varchar(10)),(mailid varchar22(10))
+                         *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table students
+  2  add (address varchar(10)) (mailid varchar22(10));
+add (address varchar(10)) (mailid varchar22(10))
+                           *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table students
+  2  add (address varchar(10)), (mailid varchar22(10));
+add (address varchar(10)), (mailid varchar22(10))
+                         *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table students
+  2  add (address varchar(10));
+
+Table altered.
+
+SQL> alter table students
+  2  add (mailid varchar(10));
+
+Table altered.
+
+SQL> alter table students
+  2  modify column(ename varchar2(15);
+modify column(ename varchar2(15)
+                    *
+ERROR at line 2:
+ORA-00907: missing right parenthesis
+
+
+SQL> alter table students
+  2  modify column(ename varchar2(15));
+modify column(ename varchar2(15))
+                    *
+ERROR at line 2:
+ORA-00907: missing right parenthesis
+
+
+SQL> alter table students
+  2  modify (ename varchar2(15));
+modify (ename varchar2(15))
+        *
+ERROR at line 2:
+ORA-00904: "ENAME": invalid identifier
+
+
+SQL> alter table students
+  2  modify (sname varchar2(15));
+
+Table altered.
+
+SQL> alter table students
+  2  drop address , mailid;
+drop address , mailid
+     *
+ERROR at line 2:
+ORA-00905: missing keyword
+
+
+SQL> alter table students
+  2  drop column address , mailid;
+drop column address , mailid
+                    *
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> alter table students
+  2  drop ( address , mailid)
+  3  ;
+
+Table altered.
+
+SQL> alter table students
+  2  rename column sname to name;
+
+Table altered.
+
+SQL> drop student purge;
+drop student purge
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table student purge;
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENTS
+  2  (
+  3  SID NUMBER(10),
+  4  SNAME VARCHAR2(10),
+  5  GENDER CHAR(1),
+  6  DOB DATE
+  7  );
+CREATE TABLE STUDENTS
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL>
+SQL> INSERT INTO STUDENTS VALUES(1,'SURYA','M','31-DEC-1997');
+
+1 row created.
+
+SQL> INSERT INTO STUDENTS VALUES(2,'ANUSHKA','F','22-APR-1998');
+
+1 row created.
+
+SQL> INSERT INTO STUDENTS VALUES(3,'KIRAN','M','18-SEP-1996');
+
+1 row created.
+
+SQL> INSERT INTO STUDENTS VALUES(4,'KAVYA','F','06-MAR-1997');
+
+1 row created.
+
+SQL> INSERT INTO STUDENTS VALUES(5,'GOWTHAM','M','25-JAN-1995');
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> drop table students;
+
+Table dropped.
+
+SQL> flashback table students to before drop;
+
+Flashback complete.
+
+SQL> rename students to studentdata;
+
+Table renamed.
+
+SQL> create table a1
+  2      (
+  3      sno number(10),
+  4      sname varchar2(10)
+  5      );
+
+Table created.
+
+SQL>
+SQL> insert into a1 values(1,'surya');
+
+1 row created.
+
+SQL> insert into a1 values(2,'anushka');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> truncate table a1;
+
+Table truncated.
+
+SQL> create table emp7
+  2  (
+  3  empno number(4),
+  4  ename varchar2(10),
+  5  sal number(8,2)
+  6  );
+
+Table created.
+
+SQL> insert into emp7 valus(1001,'kalia',8000);
+insert into emp7 valus(1001,'kalia',8000)
+                       *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into emp7 values(1001,'kalia',8000);
+
+1 row created.
+
+SQL> insert into emp7 values(1002,'balia',8000);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into emp7 values(1003,'kiran',10000);
+
+1 row created.
+
+SQL> savepoint s1;
+
+Savepoint created.
+
+SQL> insert into emp7 values(1004,'Goutham',7000);
+
+1 row created.
+
+SQL> updete emp7
+SP2-0734: unknown command beginning "updete emp..." - rest of line ignored.
+SQL> updete table emp7
+SP2-0734: unknown command beginning "updete tab..." - rest of line ignored.
+SQL> update emp7
+  2  set sal=sal+2000
+  3  where ename='KALIA';
+
+0 rows updated.
+
+SQL> update emp7
+  2  set sal=sal+2000
+  3  where ename='kalia';
+
+1 row updated.
+
+SQL> savepoint s2;
+
+Savepoint created.
+
+SQL> insert into emp7 values(1005,'kavya',7000);
+
+1 row created.
+
+SQL> select * from emp7;
+
+     EMPNO ENAME             SAL
+---------- ---------- ----------
+      1001 kalia           10000
+      1002 balia            8000
+      1003 kiran           10000
+      1004 Goutham          7000
+      1005 kavya            7000
+
+SQL> rollback to s1;
+
+Rollback complete.
+
+SQL> select * from emp7;
+
+     EMPNO ENAME             SAL
+---------- ---------- ----------
+      1001 kalia            8000
+      1002 balia            8000
+      1003 kiran           10000
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from emp7;
+
+     EMPNO ENAME             SAL
+---------- ---------- ----------
+      1001 kalia            8000
+      1002 bali
