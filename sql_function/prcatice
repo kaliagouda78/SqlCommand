@@ -1,0 +1,345 @@
+
+SQL> select to_char(5000,'l9999.99')  from dual;
+
+TO_CHAR(5000,'L999
+------------------
+          $5000.00
+
+SQL> select ename,to_char(sal,'l9,999.99') from emp;
+
+ENAME      TO_CHAR(SAL,'L9,999
+---------- -------------------
+SMITH                  $800.00
+ALLEN                $1,600.00
+WARD                 $1,250.00
+JONES                $2,975.00
+MARTIN               $1,250.00
+BLAKE                $2,850.00
+CLARK                $2,450.00
+SCOTT                $3,000.00
+KING                 $5,000.00
+TURNER               $1,500.00
+ADAMS                $1,100.00
+JAMES                  $950.00
+FORD                 $3,000.00
+MILLER               $1,300.00
+
+14 rows selected.
+
+SQL> select
+  2  to_char(5000,'c9999.99') from dual;
+
+TO_CHAR(5000,'C
+---------------
+     USD5000.00
+
+SQL> To_char(5000, 'L9999.99', 'NLS_CURRENCY=¥')
+SP2-0734: unknown command beginning "To_char(50..." - rest of line ignored.
+SQL> select To_char(5000, 'L9999.99', 'NLS_CURRENCY=¥') from dual;
+
+TO_CHAR(5000,'L999
+------------------
+         ¥5000.00
+
+SQL> select to_char(5000,'l9999.99','nls_currency=₹') from dual;
+
+TO_CHAR(5000,'L999
+------------------
+          ?5000.00
+
+SQL> SELECT TO_CHAR(5000, 'L99,999.99', 'NLS_CURRENCY=₹')
+  2  FROM dual;
+
+TO_CHAR(5000,'L99,99
+--------------------
+           ?5,000.00
+
+SQL> SELECT TO_CHAR(5000, 'L99,999.99', 'NLS_CURRENCY=Rs.')
+  2  FROM dual;
+
+TO_CHAR(5000,'L99,99
+--------------------
+         Rs.5,000.00
+
+SQL> select to_char(5000,'nls_iso_currency=india')from dual;
+select to_char(5000,'nls_iso_currency=india')from dual
+                    *
+ERROR at line 1:
+ORA-01481: invalid number format model
+
+
+ QL> select to_char(5000,'L99,999.99',nls_iso_currency=india')from dual;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> select to_char(5000,'L99,999.99','nls_iso_currency=india')from dual;
+
+TO_CHAR(5000,'L99,99
+--------------------
+           $5,000.00
+
+SQL> select to_char(5000,'L99,999.99','nls_iso_currency=japan')from dual;
+
+TO_CHAR(5000,'L99,99
+--------------------
+           $5,000.00
+
+SQL> SELECT TO_CHAR(5000, 'L99,999.99', 'NLS_ISO_CURRENCY=JAPAN')
+  2  FROM dual;
+
+TO_CHAR(5000,'L99,99
+--------------------
+           $5,000.00
+
+SQL> SELECT TO_CHAR(5000, 'L99,999.99', 'NLS_CURRENCY=₹') FROM dual;
+
+TO_CHAR(5000,'L99,99
+--------------------
+           ?5,000.00
+
+SQL> update emp
+  2  set sal=to_char(sal,'l9,999.99')
+  3  ;
+set sal=to_char(sal,'l9,999.99')
+        *
+ERROR at line 2:
+ORA-01722: invalid number
+
+
+SQL> select ename,to_char(sal,'l99999.99') from emp;
+
+ENAME      TO_CHAR(SAL,'L99999
+---------- -------------------
+SMITH                  $800.00
+ALLEN                 $1600.00
+WARD                  $1250.00
+JONES                 $2975.00
+MARTIN                $1250.00
+BLAKE                 $2850.00
+CLARK                 $2450.00
+SCOTT                 $3000.00
+KING                  $5000.00
+TURNER                $1500.00
+ADAMS                 $1100.00
+JAMES                  $950.00
+FORD                  $3000.00
+MILLER                $1300.00
+
+14 rows selected.
+
+SQL> select ename,to_char(sal,'l99999.99',nls_currency=Rs.') from emp;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> select ename,to_char(sal,'l99999.99','nls_currency=Rs.') from emp;
+
+ENAME      TO_CHAR(SAL,'L99999
+---------- -------------------
+SMITH                Rs.800.00
+ALLEN               Rs.1600.00
+WARD                Rs.1250.00
+JONES               Rs.2975.00
+MARTIN              Rs.1250.00
+BLAKE               Rs.2850.00
+CLARK               Rs.2450.00
+SCOTT               Rs.3000.00
+KING                Rs.5000.00
+TURNER              Rs.1500.00
+ADAMS               Rs.1100.00
+JAMES                Rs.950.00
+FORD                Rs.3000.00
+MILLER              Rs.1300.00
+
+14 rows selected.
+
+SQL> drop table t1;
+drop table t1
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create table t1
+  2  (
+  3  f1 date
+  4  )'
+  5
+SQL> ;
+  1  create table t1
+  2  (
+  3  f1 date
+  4* )'
+SQL> create table t1
+  2  (
+  3  f1 date
+  4  );
+
+Table created.
+
+SQL> insert into t1 value('1-JAN-25') ;
+insert into t1 value('1-JAN-25')
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into t1 values('1-JAN-25') ;
+
+1 row created.
+
+SQL> insert into t1 values(to_date('1-JAN-25')) ;
+
+1 row created.
+
+SQL> insert into t1 values(to_date('12/12/04),'dd-MM-yyyy') ;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> insert into t1 values(to_date('12/12/04),'dd-MM-yyyy')) ;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> insert into t1 values(to_date('12/12/04'),'dd-MM-yyyy')) ;
+insert into t1 values(to_date('12/12/04'),'dd-MM-yyyy'))
+                                                       *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> insert into t1 values(to_date('12/12/04'),'dd-MM-yyyy') ;
+insert into t1 values(to_date('12/12/04'),'dd-MM-yyyy')
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> select To_Date('25/12/2024', 'DD/MM/YYYY') from dual;
+
+TO_DATE('
+---------
+25-DEC-24
+
+SQL> insert into t1 values(to_date('12/12/04','DD/MM/YYYY')) ;
+
+1 row created.
+
+SQL> insert into t1 values (to_char('10/02/04','MM/DD/YYYY'));
+insert into t1 values (to_char('10/02/04','MM/DD/YYYY'))
+                               *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> insert into t1 values (to_char('8/02/04','MM/DD/YYYY'));
+insert into t1 values (to_char('8/02/04','MM/DD/YYYY'))
+                               *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> insert into t1 values (to_char('08/02/04','MM/DD/YYYY'));
+insert into t1 values (to_char('08/02/04','MM/DD/YYYY'))
+                               *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> INSERT INTO t1
+  2  VALUES (TO_DATE('08/02/04', 'MM/DD/YY'));
+
+1 row created.
+
+SQL> SELECT * FROM t1;
+
+F1
+---------
+01-JAN-25
+01-JAN-25
+12-DEC-04
+02-AUG-04
+
+SQL> select to_number('$50000','l9,999.99)from  dual;,
+  2  ;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> select to_number('$50000','l9,999.99)from  dual;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> select to_number('$50000','l9,999.99')from  dual;
+select to_number('$50000','l9,999.99')from  dual
+                 *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select to_number($50000,'l9,999.99')from  dual;
+select to_number($50000,'l9,999.99')from  dual
+                 *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> SELECT TO_NUMBER('$50,000.00', 'L99,999.99', 'NLS_CURRENCY=$')
+  2  FROM dual;
+
+TO_NUMBER('$50,000.00','L99,999.99','NLS_CURRENCY=$')
+-----------------------------------------------------
+                                                50000
+
+SQL> select to_number('$50000','l9999.99')
+  2  FROM dual;
+select to_number('$50000','l9999.99')
+                 *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select To_number('$5000.00', 'L9999.99') from dual;
+
+TO_NUMBER('$5000.00','L9999.99')
+--------------------------------
+                            5000
+
+SQL> select sum(sal) from emp;
+
+  SUM(SAL)
+----------
+     29025
+
+SQL> select max(sal) from emp;
+
+  MAX(SAL)
+----------
+      5000
+
+SQL> select min(sal) from emp;
+
+  MIN(SAL)
+----------
+       800
+
+SQL> select avg(sal) from emp;
+
+  AVG(SAL)
+----------
+2073.21429
+
+SQL> select count(*) from emp;
+
+  COUNT(*)
+----------
+        14
+
+SQL> select count(comm) from emp;
+
+COUNT(COMM)
+-----------
+          4
