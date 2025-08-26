@@ -1,0 +1,274 @@
+SQL> select
+  2  length('SLEEP')-LENGTH(REPLACE(SLEEP)) FROM DUAL;
+length('SLEEP')-LENGTH(REPLACE(SLEEP)) FROM DUAL
+                               *
+ERROR at line 2:
+ORA-00904: "SLEEP": invalid identifier
+
+
+SQL> select
+  2  length('SLEEP')-LENGTH(REPLACE('SLEEP','E')) FROM DUAL;
+
+LENGTH('SLEEP')-LENGTH(REPLACE('SLEEP','E'))
+--------------------------------------------
+                                           2
+
+SQL> SELECT MAX(SAL) FROM EMP;
+
+  MAX(SAL)
+----------
+      5000
+
+SQL> SELECT SUM(SAL) FROM EMP;
+
+  SUM(SAL)
+----------
+     29025
+
+SQL> select sum(sal) from emp
+  2  wwhere job='MANAGER';
+wwhere job='MANAGER'
+       *
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select sum(sal) from emp
+  2  where job='MANAGER';
+
+  SUM(SAL)
+----------
+      8275
+
+SQL> select sum(sal) from emp
+  2  where DEPTNO IN (10,30);
+
+  SUM(SAL)
+----------
+     18150
+
+SQL> select avg(sal) from emp;
+
+  AVG(SAL)
+----------
+2073.21429
+
+SQL> select avg(sal) from emp
+  2  where job='CLERK';
+
+  AVG(SAL)
+----------
+    1037.5
+
+SQL> select min(sal) from emp
+  2  ;
+
+  MIN(SAL)
+----------
+       800
+
+SQL> select max(sal) from emp;
+
+  MAX(SAL)
+----------
+      5000
+
+SQL> select max(sal),min(sal) from emp;
+
+  MAX(SAL)   MIN(SAL)
+---------- ----------
+      5000        800
+
+SQL> select count(*) from emp;
+
+  COUNT(*)
+----------
+        14
+
+SQL> select count(job) from emp;
+
+COUNT(JOB)
+----------
+        14
+
+SQL> select count(job) from emp
+  2  where job='MANAGER';
+
+COUNT(JOB)
+----------
+         3
+
+SQL> select count(DEPTNO) from emp
+  2  WHERE deptno in (10,30);
+
+COUNT(DEPTNO)
+-------------
+            9
+
+SQL> select count(hiredate) from emp
+  2  where to_char(hiredate,'q')=4;
+
+COUNT(HIREDATE)
+---------------
+              5
+
+SQL> select count(comm) from emp ;
+
+COUNT(COMM)
+-----------
+          4
+
+SQL> select Max(100,200) from dual;
+select Max(100,200) from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select to_char('15-JUN-05') from dual;
+
+TO_CHAR('
+---------
+15-JUN-05
+
+SQL> select to_char('15/08/1947','dd-mm-yyyy') from dual;
+select to_char('15/08/1947','dd-mm-yyyy') from dual
+               *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select to_date('15/08/1947','dd-mm-yyyy') from dual;
+
+TO_DATE('
+---------
+15-AUG-47
+
+SQL> select to_date('14-feb-04',
+  2  'dd-mon-yyyy') from dual;
+
+TO_DATE('
+---------
+14-FEB-04
+
+SQL> select * from dual
+  2  ;
+
+D
+-
+X
+
+SQL> select to_char('15-aug-1947','day') from dual;
+select to_char('15-aug-1947','day') from dual
+               *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select to_char(to_date('15-aug-1947'),'day') from dual;
+
+TO_CHAR(T
+---------
+friday
+
+SQL> select to_char(to_date('09-feb-05'),'day+5') from dual;
+select to_char(to_date('09-feb-05'),'day+5') from dual
+                                    *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(to_date('09-feb-05'),'day') from dual;
+
+TO_CHAR(TO_DATE('09-FEB-05'),'DAY')
+------------------------------------
+wednesday
+
+SQL> select to_char(to_date('09-feb-05'),'day')+5 from dual;
+select to_char(to_date('09-feb-05'),'day')+5 from dual
+       *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select to_char(to_date('09+5-feb-05'),'day') from dual;
+select to_char(to_date('09+5-feb-05'),'day') from dual
+                       *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> select to_char(to_date('9+5-feb-05'),'day') from dual;
+select to_char(to_date('9+5-feb-05'),'day') from dual
+                       *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> select to_char(to_date('09-feb-05'),'day') from dual;
+
+TO_CHAR(TO_DATE('09-FEB-05'),'DAY')
+------------------------------------
+wednesday
+
+SQL> select to_char(to_date('26-sep-2004'),'day')from dual;
+
+TO_CHAR(T
+---------
+sunday
+
+SQL> select to_char(to_date('02-oct-2004'),'day')from dual;
+
+TO_CHAR(T
+---------
+saturday
+
+SQL> select to_char(to_date('02-oct-2004'),'day')from dual;
+
+TO_CHAR(T
+---------
+saturday
+
+SQL> select to_char(to_date('26-jan-2002'),'day') from dual;
+
+TO_CHAR(T
+---------
+saturday
+
+SQL> select to_date('09-feb-05','dd-mm-yyyy')+5 from dual;
+
+TO_DATE('
+---------
+14-FEB-05
+
+SQL> select todate('09-02-05','dd/mm/yyyy')+5 from dual;
+select todate('09-02-05','dd/mm/yyyy')+5 from dual
+       *
+ERROR at line 1:
+ORA-00904: "TODATE": invalid identifier
+
+
+SQL> select to_date('09-02-05','dd/mm/yyyy')+5 from dual;
+
+TO_DATE('
+---------
+14-FEB-05
+
+SQL> select to_char(hiredate,'dd/mm/yyyy') from emp;
+
+TO_CHAR(HI
+----------
+17/12/1980
+20/02/1981
+22/02/1981
+02/04/1981
+28/09/1981
+01/05/1981
+09/06/1981
+09/12/1982
+17/11/1981
+08/09/1981
+12/01/1983
+03/12/1981
+03/12/1981
+23/01/1982
