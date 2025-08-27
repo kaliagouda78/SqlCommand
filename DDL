@@ -1,0 +1,118 @@
+---------------------------------------------------
+-- 1. DDL (Data Definition Language) Commands
+---------------------------------------------------
+
+-- Create a database
+CREATE DATABASE SchoolDB;
+
+-- Use database (MySQL / SQL Server)
+USE SchoolDB;
+
+-- Create table
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    grade CHAR(2)
+);
+
+-- Alter table (add column)
+ALTER TABLE Students ADD email VARCHAR(100);
+
+-- Rename column (Oracle / MySQL 8+ syntax may differ)
+ALTER TABLE Students RENAME COLUMN grade TO class_grade;
+
+-- Drop column
+ALTER TABLE Students DROP COLUMN email;
+
+-- Truncate table (remove all rows, keep structure)
+TRUNCATE TABLE Students;
+
+-- Drop table
+DROP TABLE Students;
+
+
+---------------------------------------------------
+-- 2. DML (Data Manipulation Language) Commands
+---------------------------------------------------
+
+-- Insert data
+INSERT INTO Students (student_id, name, age, class_grade)
+VALUES (1, 'Rahul', 18, 'A');
+
+INSERT INTO Students (student_id, name, age, class_grade)
+VALUES (2, 'Sneha', 19, 'B');
+
+-- Update data
+UPDATE Students
+SET age = 20
+WHERE student_id = 1;
+
+-- Delete data
+DELETE FROM Students
+WHERE student_id = 2;
+
+-- Select data
+SELECT * FROM Students;
+
+-- Select specific columns
+SELECT name, age FROM Students;
+
+
+---------------------------------------------------
+-- 3. DCL (Data Control Language) Commands
+---------------------------------------------------
+
+-- Grant permission
+GRANT SELECT, INSERT ON Students TO user_name;
+
+-- Revoke permission
+REVOKE INSERT ON Students FROM user_name;
+
+
+---------------------------------------------------
+-- 4. TCL (Transaction Control Language) Commands
+---------------------------------------------------
+
+-- Start a transaction
+BEGIN;
+
+-- Insert inside transaction
+INSERT INTO Students (student_id, name, age, class_grade)
+VALUES (3, 'Karan', 21, 'C');
+
+-- Rollback (undo changes)
+ROLLBACK;
+
+-- Commit (save changes permanently)
+COMMIT;
+
+-- Savepoint
+SAVEPOINT sp1;
+
+INSERT INTO Students (student_id, name, age, class_grade)
+VALUES (4, 'Priya', 22, 'A');
+
+ROLLBACK TO sp1;  -- Undo only after savepoint
+
+
+---------------------------------------------------
+-- 5. Other Useful Commands
+---------------------------------------------------
+
+-- Create index
+CREATE INDEX idx_name ON Students(name);
+
+-- Drop index (syntax varies by DBMS)
+DROP INDEX idx_name;
+
+-- Create view
+CREATE VIEW StudentNames AS
+SELECT name FROM Students;
+
+-- Drop view
+DROP VIEW StudentNames;
+
+---------------------------------------------------
+-- END OF FILE
+---------------------------------------------------
